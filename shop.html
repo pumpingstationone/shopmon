@@ -1,0 +1,73 @@
+<html>
+<head>
+    <title>Streaming random numbers</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var conn;            
+    
+            function writeStatus(id, message) {
+                document.getElementById(id).replaceWith(message);
+            }
+
+            if (window["WebSocket"]) {
+                conn = new WebSocket("ws://" + document.location.host + "/ws");
+                conn.onclose = function (evt) {
+                    var item = document.createElement("div");
+                    item.innerHTML = "<b>Connection closed.</b>";                    
+                };
+                conn.onmessage = function (evt) {
+                    var messages = evt.data.split('\n');
+                    for (var i = 0; i < messages.length; i++) {  
+                        console.log(messages[i]);      
+                        // We want to split our received message into two
+                        // parts, the data we just want to show for debugging
+                        // purposes, and the html that will be sent
+                        var val = messages[i];
+                        var debugInfo = val.split(":")[0].trim();                        
+                        var activityDiv = val.split(":")[1].trim();
+                       
+                        var item = document.createElement("div");
+                        item.id = debugInfo.split(",")[1].trim();
+                        item.innerHTML = activityDiv;            
+                        writeStatus(item.id, item);
+
+                        var debugItem = document.createElement("div");
+                        debugItem.id = "debuginfo"
+                        debugItem.innerText = debugInfo;
+                        writeStatus(debugItem.id, debugItem);
+                    }
+                };
+            } else {
+                var item = document.createElement("div");
+                item.innerHTML = "<b>Your browser does not support WebSockets.</b>";
+                appendLog(item);
+            }
+        }        
+    </script>
+    <style>
+         #hotmetals1 {
+            position: absolute;
+            top: 155px;
+            left: 880px;           
+        }
+
+        #hotmetals2 {
+            position: absolute;
+            top: 80px;
+            left: 740px;           
+        }
+
+        .pulse {
+            width: 30px;
+            height: 30px;
+        }      
+
+    </style>
+</head>
+<body>
+    <img src="img/ps1firstfloor.jpg" />  
+    <div id="debuginfo"></div>  
+    <div id="hotmetals1"></div>
+    <div id="hotmetals2"></div>
+</body>
+</html>
