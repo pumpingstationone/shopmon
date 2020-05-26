@@ -11,10 +11,16 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+// StatusMessage is a struct that is passed from the
+// MQTT goroutine (see listenOnTopic() in mqtt.go)
+// to the readPump() function in this file. It is
+// a struct so that more fields can be added later
+// if necessary
 type StatusMessage struct {
     spaceStatus string
 }
 
+// Our channel that accepts StatusMessages
 var statusChannel chan StatusMessage
 
 var addr = flag.String("addr", ":8080", "http service address")
@@ -66,11 +72,20 @@ func (c *Client) readPump() {
 	
 	for {
 		statusMsg := <- statusChannel
-		
-		// We're going to check the last byte of the message, which is either 1 or 0
-		// and if it's 1, we're going to add the activity gif to indicate the web
-		// page should show it
 
+		// We get a message that is in the form of:
+		// 		timestamp,sensor/topic name,1 or 0
+		// where the third field is a 1 or 0 to indicate that
+		// the sensor on the detected someone.
+		//
+		// What we are going to do is send back to the client
+		// the message with an html snippet appended to it, either
+		// the image, if we want to show that someone is there, or
+		// just a <p/> which, of course, won't show anything.
+		//
+		// Note that the CSS on the webpage sets up the size of the
+		// image via the "pulse" class, and it will use the topic
+		// name for matching against the css id.		
 		statusParts := strings.Split(statusMsg.spaceStatus, ",")
 		statusHTML := "<p/>"
 		if statusParts[2] == "1" {
@@ -80,8 +95,12 @@ func (c *Client) readPump() {
 		// And piece it all together
 		msgToSend := fmt.Sprintf("%s:%s", statusMsg.spaceStatus, statusHTML)
 
+		// And send t back to the client over the socket
 		log.Printf("Sending %s\n", msgToSend)		
 		c.hub.broadcast <- []byte(msgToSend)
+
+		// To prevent overwhelming the client and to give the status
+		// a couple of seconds to actually show
 		time.Sleep(2 * time.Second)
 	}
 }
@@ -148,6 +167,7 @@ func serveWs(hub *Hub, w http.ResponseWriter, r *http.Request) {
 	go client.readPump()
 }
 
+// Our standard webserver handler
 func serveHome(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.URL)
 	if r.URL.Path != "/" {
@@ -176,16 +196,21 @@ func main() {
 	// and spinning up the webserver
 	flag.Parse()
 
+	// And set up our hub and run it
 	hub := newHub()
 	go hub.run()
 
+	// Serve the images from the "img" directory
 	fileServer := http.FileServer(http.Dir("./img/"))
 	http.Handle("/img/", http.StripPrefix("/img", fileServer))
 
+	// Set up the URLs we can handle
 	http.HandleFunc("/", serveHome)	
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		serveWs(hub, w, r)
 	})
+
+	// And here we go!
 	err := http.ListenAndServe(*addr, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)

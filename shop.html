@@ -1,10 +1,11 @@
 <html>
 <head>
-    <title>Streaming random numbers</title>
+    <title>PS1 ShopMon</title>
     <script type="text/javascript">
         window.onload = function () {
             var conn;            
     
+            // Now actually write out our new html snippet
             function writeStatus(id, message) {
                 document.getElementById(id).replaceWith(message);
             }
@@ -20,17 +21,27 @@
                     for (var i = 0; i < messages.length; i++) {  
                         console.log(messages[i]);      
                         // We want to split our received message into two
-                        // parts, the data we just want to show for debugging
-                        // purposes, and the html that will be sent
+                        // parts, the data we want to show for debugging
+                        // purposes, and the html that was sent that
+                        // will either be the activity image, or just an
+                        // empty <p/> tag
                         var val = messages[i];
                         var debugInfo = val.split(":")[0].trim();                        
                         var activityDiv = val.split(":")[1].trim();
                        
+                        // Okay, this is an important part. We are creating
+                        // the div, and we're setting as the id the second
+                        // field from the debugInfo line. That line should
+                        // match the css id below because we are using
+                        // absolute positioning to place the image (if we're
+                        // going to show one) on the map.
                         var item = document.createElement("div");
                         item.id = debugInfo.split(",")[1].trim();
                         item.innerHTML = activityDiv;            
                         writeStatus(item.id, item);
 
+                        // And here we're just writing out the debug info
+                        // below the map for debugging purposes
                         var debugItem = document.createElement("div");
                         debugItem.id = "debuginfo"
                         debugItem.innerText = debugInfo;
@@ -45,6 +56,13 @@
         }        
     </script>
     <style>
+        /*
+         * Location IDs
+         * 
+         * These IDs are very important because they specify exactly
+         * where on the map to be shown. As you add more sensors, you
+         * must add those related IDs here to shown properly on the map
+         */
          #hotmetals1 {
             position: absolute;
             top: 155px;
@@ -57,6 +75,7 @@
             left: 740px;           
         }
 
+        /* The size of the activity gif, set on the server side */
         .pulse {
             width: 30px;
             height: 30px;
@@ -67,6 +86,10 @@
 <body>
     <img src="img/ps1firstfloor.jpg" />  
     <div id="debuginfo"></div>  
+    <!-- 
+        For each sensor, an initial div with the sensor ID should 
+        be set here as a placeholder 
+    -->
     <div id="hotmetals1"></div>
     <div id="hotmetals2"></div>
 </body>
