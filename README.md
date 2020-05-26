@@ -15,13 +15,13 @@ ShopMon has a goroutine that is listening on the agreed-upon topic for messages 
 ## Files
 
 ### `/img`
-This directory contains `ps1firstfloor.jpg`, a blueprint exported from Sketchup from Gary. It also has `activity.gif` which is an animated gif used to indicate whether anyone is occupying a particular space
+This directory contains `ps1firstfloor.jpg`, a blueprint exported from Sketchup of the floorplan of [Pumping Station: One](https://pumpingstationone.org). It also has `activity.gif` which is an animated gif used to indicate whether anyone is occupying a particular space.
 
 ### `hub.go`
-File straight from the [Gorilla](https://github.com/gorilla/websocket) Websocket project for Go
+File straight from the [Gorilla](https://github.com/gorilla/websocket) Websocket project for Go.
 
 ### `mqtt.go`
-For listening to messages on the MQTT server on `glue.pumpingstationone.org`. When it sends a message it puts it on an internal channel 
+For listening to messages on the MQTT server. When it sends a message it puts it on a buffered internal channel for the function in `main.go` to read.
 
 ### `main.go`
 This file sets up the web server, creates a websocket-based site, and listens on the internal channel for messages from `mqtt.go` above. It streams the messages slightly modified to include a small html snippet to show the `activity.gif` image which is then sent to the html page.
