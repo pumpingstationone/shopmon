@@ -11,7 +11,7 @@
             }
 
             if (window["WebSocket"]) {
-                conn = new WebSocket("ws://" + document.location.host + "/ws");
+                conn = new WebSocket("wss://" + document.location.host + "/ws");
                 conn.onclose = function (evt) {
                     var item = document.createElement("div");
                     item.innerHTML = "<b>Connection closed.</b>";                    
@@ -85,7 +85,9 @@
 </head>
 <body>
     <img src="img/ps1firstfloor.jpg" />  
-    <div id="debuginfo"></div>  
+    <div id="debuginfo"></div><br/>  
+	<br/>
+	Hey! If the info in the line above isn't changing (e.g. you should see the number increasing), refresh the page and it'll kick in again
     <!-- 
         For each sensor, an initial div with the sensor ID should 
         be set here as a placeholder 
