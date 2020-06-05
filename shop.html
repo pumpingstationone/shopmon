@@ -36,6 +36,9 @@
                         // absolute positioning to place the image (if we're
                         // going to show one) on the map.
                         var item = document.createElement("div");
+                        // And let the image fade out if it doesn't get refreshed
+                        // again
+                        item.className = "fade-out";
                         item.id = debugInfo.split(",")[1].trim();
                         item.innerHTML = activityDiv;            
                         writeStatus(item.id, item);
@@ -81,17 +84,69 @@
             height: 30px;
         }      
 
+        .fade-out {
+            animation: fadeOut ease 11s;
+            -webkit-animation: fadeOut ease 11s;
+            -moz-animation: fadeOut ease 11s;
+            -o-animation: fadeOut ease 11s;
+            -ms-animation: fadeOut ease 11s;
+        }
+        
+        @keyframes fadeOut {
+            0% {
+                opacity:1;
+            }
+            100% {
+                opacity:0;
+            }
+        }
+
+        @-moz-keyframes fadeOut {
+            0% {
+                opacity:1;
+            }
+            100% {
+                opacity:0;
+            }
+        }
+
+        @-webkit-keyframes fadeOut {
+            0% {
+                opacity:1;
+            }
+            100% {
+                opacity:0;
+            }
+        }
+
+        @-o-keyframes fadeOut {
+            0% {
+                opacity:1;
+            }
+            100% {
+                opacity:0;
+            }
+        }
+
+        @-ms-keyframes fadeOut {
+            0% {
+                opacity:1;
+            }
+            100% {
+                opacity:0;
+            }
+        }
     </style>
 </head>
 <body>
     <img src="img/ps1firstfloor.jpg" />  
-    <div id="debuginfo"></div><br/>  
-	<br/>
-	Hey! If the info in the line above isn't changing (e.g. you should see the number increasing), refresh the page and it'll kick in again
+    <pre><div id="debuginfo"></div></pre>
     <!-- 
         For each sensor, an initial div with the sensor ID should 
         be set here as a placeholder 
     -->
+    <br/>
+    Hey! If the info in the line above isn't changing (e.g. you should see the number increasing), refresh the page and it'll kick in again
     <div id="hotmetals1"></div>
     <div id="hotmetals2"></div>
 </body>
