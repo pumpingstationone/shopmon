@@ -1,0 +1,42 @@
+[
+    {
+      "name": "CatWalk-1",
+      "zone": "003",
+      "location": "Next to box pointing north near door"
+    },
+    {
+      "name": "CatWalk-2",
+      "zone": "001",
+      "location": "Next to box pointing south"
+    },
+    {
+      "name": "Electronics-1",
+      "zone": "002",
+      "location": "NE corner by bathroom pointing SW"
+    },
+    {
+      "name": "Arts-1",
+      "zone": "004",
+      "location": "Above printer pointing NW into room"
+    },
+    {
+      "name": "Lasers-1",
+      "zone": "005",
+      "location": "Above bathroom pointing NW"
+    },
+    {
+      "name": "Kitchen-1",
+      "zone": "006",
+      "location": "SW corner above sinks pointing NE"
+    },
+    {
+      "name": "Lounge-2",
+      "zone": "008",
+      "location": "NE corner by bathroom pointing SW"
+    },
+    {
+      "name": "HotMetals-4",
+      "zone": "015",
+      "location": "Hanging from ceiling by curtain separating woodshop from hot metals"
+    }
+]
