@@ -124,20 +124,56 @@
                 opacity:0;
             }
         }
+       
+        /* Fixes the position of the images at the top of the screen */
+        #maprow {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+        #mapfirst {
+            position: fixed;
+            top: 10;
+            left: 10;
+        }
+        #mapsecond {
+            position: fixed;
+            top: 10;
+            left: 800;
+        }
+
+        /* For all the stuff below the images */
+        #restofpage {
+            position: fixed;
+            top: 520px;
+            left: 20px;            
+        }
+
     </style>
 </head>
 <body>
-    <h2 id="title">First Floor</h2>
-    <img src="img/Ps1_first_floor.jpg"  />  
-    <h2 id="title">Second Floor</h2>
-    <img src="img/Ps1_second_floor.jpg" /> 
-    <pre><div id="debuginfo"></div></pre>
-    <!-- 
-        For each sensor, an initial div with the sensor ID should 
-        be set here as a placeholder 
-    -->
-    <br/>
-    Hey! If the info in the line above isn't changing (i.e. you should see the number increasing), refresh the page and it'll kick in again
+    <div id="maprow">
+        <div id="mapfirst">
+            <h2 id="title">First Floor</h2>
+            <img src="img/Ps1_first_floor.jpg"/>  
+        </div>
+        <div id="mapsecond">
+            <h2 id="title">Second Floor</h2>
+            <img src="img/Ps1_second_floor.jpg"/> 
+        </div>
+    </div>
+
+    <div id="restofpage">    
+        <pre><div id="debuginfo"></div></pre>
+        <!-- 
+            For each sensor, an initial div with the sensor ID should 
+            be set here as a placeholder 
+        -->
+        <br/>
+        blah Hey! If the info in the line above isn't changing (i.e. you should see the number increasing), refresh the page and it'll kick in again
+    </div>
+
+    <!-- The sensors -->
     <div id="HotMetals-Aux-1"></div>
     <div id="HotMetals-Aux-2"></div>
     <div id="CatWalk-1"></div>
