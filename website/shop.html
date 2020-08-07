@@ -1,5 +1,7 @@
 <html>
 <head>
+    <!-- Where all the sensors are located -->
+    <link rel="stylesheet" type="text/css" href="img/sensors.css">
     <title>PS1 ShopMon</title>
     <script type="text/javascript">
         window.onload = function () {
@@ -11,7 +13,8 @@
             }
 
             if (window["WebSocket"]) {
-                conn = new WebSocket("wss://" + document.location.host + "/ws");
+                //conn = new WebSocket("wss://" + document.location.host + "/ws");
+                conn = new WebSocket("ws://" + document.location.host + "/ws");
                 conn.onclose = function (evt) {
                     var item = document.createElement("div");
                     item.innerHTML = "<b>Connection closed.</b>";                    
@@ -59,23 +62,8 @@
         }        
     </script>
     <style>
-        /*
-         * Location IDs
-         * 
-         * These IDs are very important because they specify exactly
-         * where on the map to be shown. As you add more sensors, you
-         * must add those related IDs here to shown properly on the map
-         */
-         #hotmetals1 {
-            position: absolute;
-            top: 155px;
-            left: 880px;           
-        }
-
-        #hotmetals2 {
-            position: absolute;
-            top: 80px;
-            left: 740px;           
+        #title {
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         /* The size of the activity gif, set on the server side */
@@ -139,7 +127,10 @@
     </style>
 </head>
 <body>
-    <img src="img/ps1firstfloor.jpg" />  
+    <h2 id="title">First Floor</h2>
+    <img src="img/Ps1_first_floor.jpg"  />  
+    <h2 id="title">Second Floor</h2>
+    <img src="img/Ps1_second_floor.jpg" /> 
     <pre><div id="debuginfo"></div></pre>
     <!-- 
         For each sensor, an initial div with the sensor ID should 
@@ -147,7 +138,14 @@
     -->
     <br/>
     Hey! If the info in the line above isn't changing (i.e. you should see the number increasing), refresh the page and it'll kick in again
-    <div id="hotmetals1"></div>
-    <div id="hotmetals2"></div>
+    <div id="HotMetals-Aux-1"></div>
+    <div id="HotMetals-Aux-2"></div>
+    <div id="CatWalk-1"></div>
+    <div id="CatWalk-2"></div>
+    <div id="Kitchen-1"></div>
+    <div id="Arts-1"></div>
+    <div id="Electronics-1"></div>
+    <div id="Lasers-1"></div>
+    <div id="Lounge-2"></div>
 </body>
 </html>

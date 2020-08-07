@@ -11,25 +11,24 @@ import (
 
 // MQTTServer is the URL to the MQTT server in the format of
 // "tcp://yourservername:port" (port is typically 1883)
-const mqttServer = ""
+const mqttServer = "tcp://10.10.1.224:1883"
 
 // The topic to listen on. This is specific to how your
 // topics are set up on the server. You can listen to more
 // than one at a time in a hierarchy with the octothorp ("#")
 // character (e.g. "/occupancy/#" )
-const topicName = ""
+const topicName = "shopmontopic"
 
 // The clientID must be a unique name for listening on the
 // topics, otherwise you may get disconnect errors
-const clientID = ""
-
+const clientID = "shopmon2"
 
 func onMessageReceived(client MQTT.Client, message MQTT.Message) {
-		log.Printf("Received message on topic: %s\nMessage: %s\n", message.Topic(), message.Payload())
-		var sm StatusMessage
-		sm.spaceStatus = string(message.Payload())
-		// And send it to our buffered channel for the websocket portion to handle
-		statusChannel <- sm
+	log.Printf("Received message on topic: %s\nMessage: %s\n", message.Topic(), message.Payload())
+	var sm StatusMessage
+	sm.spaceStatus = string(message.Payload())
+	// And send it to our buffered channel for the websocket portion to handle
+	statusChannel <- sm
 }
 
 func listenOnTopic() {

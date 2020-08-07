@@ -3,10 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"	
+	"log"
 	"net/http"
 	"time"
-	"strings"
 
 	"github.com/gorilla/websocket"
 )
@@ -17,7 +16,7 @@ import (
 // a struct so that more fields can be added later
 // if necessary
 type StatusMessage struct {
-    spaceStatus string
+	spaceStatus string
 }
 
 // Our channel that accepts StatusMessages
@@ -65,38 +64,32 @@ func (c *Client) readPump() {
 		c.hub.unregister <- c
 		c.conn.Close()
 	}()
-	
+
 	c.conn.SetReadLimit(maxMessageSize)
 	c.conn.SetReadDeadline(time.Now().Add(pongWait))
 	c.conn.SetPongHandler(func(string) error { c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
-	
+
 	for {
-		statusMsg := <- statusChannel
+		statusMsg := <-statusChannel
 
 		// We get a message that is in the form of:
-		// 		timestamp,sensor/topic name,1 or 0
-		// where the third field is a 1 or 0 to indicate that
-		// the sensor on the detected someone.
+		// 		timestamp,sensor
 		//
+		// By virtue of the fact we got a message means that
+		// we should indicate someone is in the space
 		// What we are going to do is send back to the client
-		// the message with an html snippet appended to it, either
-		// the image, if we want to show that someone is there, or
-		// just a <p/> which, of course, won't show anything.
+		// the message with an html snippet appended to it.
 		//
 		// Note that the CSS on the webpage sets up the size of the
 		// image via the "pulse" class, and it will use the topic
-		// name for matching against the css id.		
-		statusParts := strings.Split(statusMsg.spaceStatus, ",")
-		statusHTML := "<p/>"
-		if statusParts[2] == "1" {
-			statusHTML = "<img class=\"pulse\" src=\"/img/activity.gif\"/>"
-		}
+		// name for matching against the css id.
+		statusHTML := "<img class=\"pulse\" src=\"/img/activity.gif\"/>"
 
 		// And piece it all together
 		msgToSend := fmt.Sprintf("%s:%s", statusMsg.spaceStatus, statusHTML)
 
 		// And send t back to the client over the socket
-		log.Printf("Sending %s\n", msgToSend)		
+		log.Printf("Sending %s\n", msgToSend)
 		c.hub.broadcast <- []byte(msgToSend)
 
 		// To prevent overwhelming the client and to give the status
@@ -178,7 +171,7 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	
+
 	http.ServeFile(w, r, "shop.html")
 }
 
@@ -205,7 +198,7 @@ func main() {
 	http.Handle("/img/", http.StripPrefix("/img", fileServer))
 
 	// Set up the URLs we can handle
-	http.HandleFunc("/", serveHome)	
+	http.HandleFunc("/", serveHome)
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		serveWs(hub, w, r)
 	})

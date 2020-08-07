@@ -1,0 +1,72 @@
+/* This CSS file contains the locations of each sensor on the map */
+
+/*
+* Location IDs
+* 
+* These IDs are very important because they specify exactly
+* where on the map to be shown. As you add more sensors, you
+* must add those related IDs here to shown properly on the map
+*/
+
+/* Pi-based sensor above welding table */
+#HotMetals-Aux-1 {
+    position: absolute;
+    top: 850px;
+    left: 420px;           
+}
+
+/* Pi-based sensor next to CNC plasma table */
+#HotMetals-Aux-2 {
+    position: absolute;
+    top: 680px;
+    left: 40px;           
+}
+
+/* Next to box pointing north near door */
+#CatWalk-1 {
+    position: absolute;
+    top: 1400px;
+    left: 850px;           
+}
+
+/* Next to box pointing south */
+#CatWalk-2 {
+    position: absolute;
+    top: 1800px;
+    left: 850px;           
+}
+
+/* SW corner above sinks pointing NE */
+#Kitchen-1 {
+    position: absolute;
+    top: 280px;
+    left: 500px;           
+}
+
+/* Above printer pointing NW into room */
+#Arts-1 {
+    position: absolute;
+    top: 1300px;
+    left: 250px;           
+}
+
+/* NE corner by bathroom pointing SW */
+#Electronics-1 {
+    position: absolute;
+    top: 1800px;
+    left: 350px;           
+}
+
+/* Above bathroom pointing NW */
+#Lasers-1 {
+    position: absolute;
+    top: 170px;
+    left: 170px;           
+}
+
+/* NE corner by bathroom pointing SW */
+#Lounge-2 {
+    position: absolute;
+    top: 510px;
+    left: 210px;           
+}
