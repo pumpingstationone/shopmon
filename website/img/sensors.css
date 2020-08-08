@@ -22,6 +22,13 @@
     left: 40px;           
 }
 
+/* By curtain separating woodshop from hot metals */
+#HotMetals-4{
+    position: absolute;
+    top: 380px;
+    left: 270px;           
+}
+
 /* Next to box pointing north near door */
 #CatWalk-1 {
     position: absolute;
