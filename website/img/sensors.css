@@ -9,14 +9,14 @@
 */
 
 /* Pi-based sensor above welding table */
-#HotMetals-Aux-1 {
+#HotMetals-Aux-2 {
     position: absolute;
     top: 440px;
     left: 200px;           
 }
 
 /* Pi-based sensor next to CNC plasma table */
-#HotMetals-Aux-2 {
+#HotMetals-Aux-1 {
     position: absolute;
     top: 380px;
     left: 40px;           
