@@ -17,7 +17,7 @@ const mqttServer = "tcp://10.10.1.224:1883"
 // topics are set up on the server. You can listen to more
 // than one at a time in a hierarchy with the octothorp ("#")
 // character (e.g. "/occupancy/#" )
-const topicName = "shopmontopic"
+const topicName = "webshopmontopic"
 
 // The clientID must be a unique name for listening on the
 // topics, otherwise you may get disconnect errors

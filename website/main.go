@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -73,17 +74,23 @@ func (c *Client) readPump() {
 		statusMsg := <-statusChannel
 
 		// We get a message that is in the form of:
-		// 		timestamp,sensor
+		// 		timestamp,sensor/topic name,1 or 0
+		// where the third field is a 1 or 0 to indicate that
+		// the sensor on the detected someone.
 		//
-		// By virtue of the fact we got a message means that
-		// we should indicate someone is in the space
 		// What we are going to do is send back to the client
-		// the message with an html snippet appended to it.
+		// the message with an html snippet appended to it, either
+		// the image, if we want to show that someone is there, or
+		// just a <p/> which, of course, won't show anything.
 		//
 		// Note that the CSS on the webpage sets up the size of the
 		// image via the "pulse" class, and it will use the topic
 		// name for matching against the css id.
-		statusHTML := "<img class=\"pulse\" src=\"/img/activity.gif\"/>"
+		statusParts := strings.Split(statusMsg.spaceStatus, ",")
+		statusHTML := "<p/>"
+		if statusParts[2] == "1" {
+			statusHTML = "<img class=\"pulse\" src=\"/img/activity.gif\"/>"
+		}
 
 		// And piece it all together
 		msgToSend := fmt.Sprintf("%s:%s", statusMsg.spaceStatus, statusHTML)
