@@ -77,3 +77,24 @@
     top: 285px;
     left: 95px;           
 }
+
+/* Above forge */
+#HotMetals-1 {
+    position: absolute;
+    top: 440px;
+    left: 130px;           
+}
+
+/* Above grinding table */
+#HotMetals-2 {
+    position: absolute;
+    top: 395px;
+    left: 170px;           
+}
+
+/* Above welders */
+#HotMetals-3 {
+    position: absolute;
+    top: 452px;
+    left: 260px;           
+}
