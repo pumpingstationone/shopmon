@@ -155,6 +155,85 @@
             left: 20px;            
         }
 
+        .arealabels {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 24px;
+            color: rgb(160, 197, 221);
+        }
+
+        p {
+            margin: 1px;
+        }
+
+        /* labels for the various areas */
+        #hotmetals-area {            
+            position: absolute;
+            top: 425px;
+            left: 90px;
+        }
+        #woodshop-area {            
+            position: absolute;
+            top: 425px;
+            left: 470px;
+        }
+        #lounge-area {            
+            position: absolute;
+            top: 287px;
+            left: 70px;
+        }
+        #lasers-area {            
+            position: absolute;
+            top: 110px;
+            left: 30px;
+            text-align: center;            
+        }
+        #kitchen-area {            
+            position: absolute;
+            top: 157px;
+            left: 215px;            
+            -ms-transform: rotate(-90deg); /* IE 9 */
+            transform: rotate(-90deg);
+        }
+        #coldmetals-area {            
+            position: absolute;
+            top: 287px;
+            left: 320px;
+        }
+        #general-area {    
+            text-align: center;                    
+            position: absolute;
+            top: 130px;
+            left: 320px;
+        }
+        #smallmetals-area {    
+            text-align: center;                    
+            position: absolute;
+            top: 150px;
+            left: 530px;
+        }
+        #dock-area {            
+            position: absolute;
+            top: 287px;
+            left: 614px;
+        }
+        #arts-area {            
+            text-align: center;                    
+            position: absolute;
+            top: 120px;
+            left: 818px;
+        }
+        #electronics-area {            
+            position: absolute;
+            top: 287px;
+            left: 840px;
+        }
+        #catwalk-area {            
+            position: absolute;
+            top: 207px;
+            left: 995px;            
+            -ms-transform: rotate(-90deg); /* IE 9 */
+            transform: rotate(-90deg);
+        }
     </style>
 </head>
 <body>
@@ -178,6 +257,20 @@
         <br/>
         PS1 ShopMon
     </div>
+
+    <!-- Area labels -->
+    <div class="arealabels" id="hotmetals-area">Hot Metal Shop</div>
+    <div class="arealabels" id="woodshop-area">Wood Shop</div>
+    <div class="arealabels" id="lounge-area">Lounge</div>
+    <div class="arealabels" id="lasers-area">Lasers<p/>3D Printing</div>
+    <div class="arealabels" id="kitchen-area">Kitchen</div>
+    <div class="arealabels" id="coldmetals-area">Machine Shop</div>
+    <div class="arealabels" id="general-area">General<p/>Workspace</div>
+    <div class="arealabels" id="smallmetals-area">Small<p/>Metals</div>
+    <div class="arealabels" id="dock-area">Dock</div>
+    <div class="arealabels" id="arts-area">Arts<p/>and Crafts</div>
+    <div class="arealabels" id="electronics-area">Electronics</div>
+    <div class="arealabels" id="catwalk-area">Catwalk</div>
 
     <!-- The sensors -->
     <div id="HotMetals-Aux-1"></div>
