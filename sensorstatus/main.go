@@ -36,7 +36,7 @@ var mutex = &sync.Mutex{}
 
 // The time, in seconds, of how long an 'active' status message
 // can live before it's expired
-const expiry = 15
+const expiry = 10
 
 // This function goes through the sensorMap every five seconds and
 // checks to see what messages have expired (i.e. their timestamps
