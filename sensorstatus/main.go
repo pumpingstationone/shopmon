@@ -47,6 +47,7 @@ const expiry = 15
 func buildTimeline() {
 	for {
 		newLine := ""
+		time.Sleep(1 * time.Second)
 		now := time.Now()
 		if len(sensorMap) > 0 {
 			mutex.Lock()
