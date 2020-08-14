@@ -72,14 +72,17 @@ def readQueue():
                 # Now let's find the sensor number in the
                 # array...
                 sensorName = "Unknown sensor"
+                sensorArea = "Unknown area"
                 for sensor in sensors:
                     if sensor['zone'] == parts[1]:
                         sensorName = sensor['name']
+                        sensorArea = sensor['area']
+
                 # Now we send the timestamp and sensor
                 # number to the mqtt server
 
                 ts = round(time.time())
-                txline = str(ts) + "," + sensorName + "," + sensor['area']
+                txline = str(ts) + "," + sensorName + "," + sensorArea
                 logging.info("%s", txline)
 
                 # Set up our mqtt connection
