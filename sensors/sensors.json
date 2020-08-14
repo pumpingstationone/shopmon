@@ -1,56 +1,67 @@
 [
     {
       "name": "CatWalk-1",
+      "area": "Catwalk",
       "zone": "003",
       "location": "Next to box pointing north near door"
     },
     {
       "name": "CatWalk-2",
+      "area": "Catwalk",
       "zone": "001",
       "location": "Next to box pointing south"
     },
     {
       "name": "Electronics-1",
+      "area": "Electronics",
       "zone": "002",
       "location": "NE corner by bathroom pointing SW"
     },
     {
       "name": "Arts-1",
+      "area": "Arts",
       "zone": "004",
       "location": "Above printer pointing NW into room"
     },
     {
       "name": "Lasers-1",
+      "area": "CNC Lounge",
       "zone": "005",
       "location": "Above bathroom pointing NW"
     },
     {
       "name": "Kitchen-1",
+      "area": "Kitchen",
       "zone": "006",
       "location": "SW corner above sinks pointing NE"
     },
     {
       "name": "Lounge-2",
+      "area": "Lounge 2.0",
       "zone": "007",
       "location": "NE corner by bathroom pointing SW"
     },
     {
       "name": "HotMetals-4",
+      "area": "Hot Metals",
       "zone": "015",
       "location": "Hanging from ceiling by curtain separating woodshop from hot metals"
     },
     {
       "name": "HotMetals-2",
+      "area": "Hot Metals",
       "zone": "010",
       "location": "Hanging above grinding table"
     },
     {
       "name": "HotMetals-3",
+      "area": "Hot Metals",
       "zone": "009",
       "location": "Above welders"
     },
     {
       "name": "HotMetals-1",
+      "area": "Hot Metals",
       "zone": "011",
       "location": "Above forge"
     }

@@ -93,7 +93,7 @@ func (c *Client) readPump() {
 		}
 
 		// And piece it all together
-		msgToSend := fmt.Sprintf("%s:%s", statusMsg.spaceStatus, statusHTML)
+		msgToSend := fmt.Sprintf("%s|%s", statusMsg.spaceStatus, statusHTML)
 
 		// And send t back to the client over the socket
 		log.Printf("Sending %s\n", msgToSend)

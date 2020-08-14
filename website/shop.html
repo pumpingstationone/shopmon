@@ -35,8 +35,8 @@
                         // will either be the activity image, or just an
                         // empty <p/> tag
                         var val = messages[i];
-                        var debugInfo = val.split(":")[0].trim();                        
-                        var activityDiv = val.split(":")[1].trim();
+                        var debugInfo = val.split("|")[0].trim();                        
+                        var activityDiv = val.split("|")[1].trim();
                        
                         // Okay, this is an important part. We are creating
                         // the div, and we're setting as the id the second
@@ -48,7 +48,11 @@
                         // And let the image fade out if it doesn't get refreshed
                         // again
                         item.className = "fade-out";
-                        item.id = debugInfo.split(",")[1].trim();
+                        // Split the debug part by the comma which will give us
+                        // the sensor name:area for element[1] so we split that
+                        // into two parts, and we only want the first part (e.g. 
+                        // HotMetals-5) so we can look up its location in the CSS
+                        item.id = debugInfo.split(",")[1].trim().split(":")[0].trim();
                         item.innerHTML = activityDiv;            
                         writeStatus(item.id, item);
 

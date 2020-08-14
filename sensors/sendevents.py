@@ -79,7 +79,7 @@ def readQueue():
                 # number to the mqtt server
 
                 ts = round(time.time())
-                txline = str(ts) + "," + sensorName
+                txline = str(ts) + "," + sensorName + "," + sensor['area']
                 logging.info("%s", txline)
 
                 # Set up our mqtt connection

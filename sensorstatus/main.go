@@ -38,7 +38,7 @@ var mutex = &sync.Mutex{}
 // can live before it's expired
 const expiry = 10
 
-// This function goes through the sensorMap every five seconds and
+// This function goes through the sensorMap every second and
 // checks to see what messages have expired (i.e. their timestamps
 // are older than the expiry constant above). It builds a message line
 // with either a 0 or 1 at the end to indicate that the sensor message
@@ -114,20 +114,28 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
+		// We want to preserve the area the sensor is in, but what is being
+		// sent onward doesn't have access to the original message but for what
+		// is in the map so we are gonna do a little trick and append the area name
+		// to the sensor id so the key is effectively "HotMetals-2:Hot Metals", so
+		// that downstream they'll have both parts and can split on the colon
+		fullKey := lineParts[1] + ":" + lineParts[2]
+
 		// Convert the unix timestamp to a time object for the map
 		tm := time.Unix(i, 0)
 		mutex.Lock()
 		// Check to see if there's already an entry for this sensor in the map
-		if _, testIfExists := sensorMap[lineParts[1]]; testIfExists {
+		if _, testIfExists := sensorMap[fullKey]; testIfExists {
 			// There is an entry, but it has an older timestamp
 			// so we are going to simply delete it, because we know that
 			// the timestamp we have right now is newer than this one (even if
 			// by a second), and that's all we care about
-			delete(sensorMap, lineParts[1])
+			delete(sensorMap, fullKey)
 		}
 		// Now we add our entry into the map so the buildTimeLine() function
 		// can evaulate it
-		sensorMap[lineParts[1]] = tm
+		sensorMap[fullKey] = tm
 		mutex.Unlock()
 	}
 
