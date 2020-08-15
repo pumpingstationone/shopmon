@@ -98,3 +98,10 @@
     top: 452px;
     left: 260px;           
 }
+
+/* Attached to wall by dust collector */
+#ShopBot-1 {
+    position: absolute;
+    top: 450px;
+    left: 660px;           
+}

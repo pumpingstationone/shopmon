@@ -135,7 +135,7 @@ func reportForArea(input string) string {
 func checkForCommands(input string) (bool, string) {
 	response := ""
 	sendResponse := false
-	fmt.Println("Got this:", input)
+	//fmt.Println("Got this:", input)
 	matched, _ := regexp.MatchString("!area", input)
 	if matched {
 		sendResponse = true
