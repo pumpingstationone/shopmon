@@ -35,7 +35,12 @@ func trimSuffix(s, suffix string) string {
 func formatSeconds(duration time.Duration) string {
 	timeLine := ""
 
-	days := int(duration.Hours() / 24)
+	totalSeconds := int64(duration.Seconds())
+	seconds := (totalSeconds % 60)
+	minutes := (totalSeconds % 3600) / 60
+	hours := (totalSeconds % 86400) / 3600
+	days := (totalSeconds % (86400 * 30)) / 86400
+
 	if days > 0 {
 		if days > 1 {
 			timeLine = fmt.Sprintf("%d days, ", days)
@@ -44,10 +49,6 @@ func formatSeconds(duration time.Duration) string {
 		}
 	}
 
-	hours := int(duration.Hours())
-	if days >= 1 {
-		hours = int(duration.Hours() / (24.0 * float64(days)))
-	}
 	if hours > 0 {
 		if hours > 1 {
 			timeLine += fmt.Sprintf("%d hours, ", hours)
@@ -56,10 +57,6 @@ func formatSeconds(duration time.Duration) string {
 		}
 	}
 
-	minutes := int(duration.Minutes())
-	if hours >= 1 {
-		minutes = int(duration.Minutes() / (60.0 * float64(hours)))
-	}
 	if minutes > 0 {
 		if minutes > 1 {
 			timeLine += fmt.Sprintf("%d minutes, ", minutes)
@@ -68,11 +65,6 @@ func formatSeconds(duration time.Duration) string {
 		}
 	}
 
-	seconds := int(duration.Seconds())
-	if minutes >= 1 {
-		seconds = int(duration.Seconds() / (60.0 * float64(minutes)))
-	}
-	fmt.Println("Seconds is: ", seconds)
 	if seconds > 0 {
 		if seconds > 1 {
 			timeLine += fmt.Sprintf("%d seconds, ", seconds)
