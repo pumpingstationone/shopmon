@@ -64,5 +64,11 @@
       "area": "Hot Metals",
       "zone": "011",
       "location": "Above forge"
+    },
+    {
+      "name": "ShopBot-1",
+      "area": "ShopBot",
+      "zone": "012",
+      "location": "Mounted on dust collector booth wall"
     }
 ]
