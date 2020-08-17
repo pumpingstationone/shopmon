@@ -32,7 +32,7 @@ func trimSuffix(s, suffix string) string {
 	return s
 }
 
-func formatSeconds(duration time.Duration) string {
+func formatTime(duration time.Duration) string {
 	timeLine := ""
 
 	totalSeconds := int64(duration.Seconds())
@@ -91,6 +91,11 @@ func reportForArea(input string) string {
 		fmt.Println("The area we want is:", area)
 	}
 
+	getAllAreas := false
+	if strings.ToLower(area) == "all" {
+		getAllAreas = true
+	}
+
 	// These two strings are for building the help message in case
 	// we didn't get an area or an unknown area
 	helpMsg := "Hmm, you want to enter `!area <area>` (case insensitive).\n_I currently know of the following areas:_ "
@@ -104,13 +109,15 @@ func reportForArea(input string) string {
 	foundArea := false
 	mutex.Lock()
 	for k, v := range sensorMap {
-		if strings.ToLower(k) == strings.ToLower(area) {
+		if (getAllAreas == true) || (strings.ToLower(k) == strings.ToLower(area)) {
 			diff := now.Sub(v)
-			timeInfo := formatSeconds(diff)
-			areaStatus = fmt.Sprintf("There was someone in `%s` *%s* ago", k, timeInfo)
+			timeInfo := formatTime(diff)
+			areaStatus += fmt.Sprintf("There was someone in `%s` *%s* ago", k, timeInfo)
+			if getAllAreas == true {
+				areaStatus += "\n"
+			}
 			foundArea = true
 		}
-
 		// And while we're here, let's build the help text
 		areaList += fmt.Sprintf("`%s`, ", k)
 	}
@@ -119,6 +126,7 @@ func reportForArea(input string) string {
 	// And spiffy up the help message a little...
 	areaList = trimSuffix(strings.TrimSpace(areaList), ",")
 	helpMsg += areaList
+	helpMsg += "\nYou can also type `!area all` to get everything"
 
 	// If we didn't find the area the user wanted, then show
 	// the help message
@@ -166,6 +174,15 @@ func keepTrackOfAreas() {
 		area := strings.Split(lineParts[1], ":")[1]
 		if len(area) == 0 {
 			fmt.Println("No area for", lineParts[1])
+			continue
+		}
+
+		// Also, we have a failsafe "Unknown area" which covers the time between
+		// the sensor going live and it being added to the database (e.g. the json
+		// file in the sensors project). We don't want to include that in our
+		// list
+		if area == "Unknown area" {
+			fmt.Println("Not adding unknown area")
 			continue
 		}
 
