@@ -70,5 +70,35 @@
       "area": "ShopBot",
       "zone": "012",
       "location": "Mounted on dust collector booth wall"
+    },
+    {
+      "name": "Tormach-1",
+      "area": "Cold Metals",
+      "zone": "017",
+      "location": "On ceiling near Tormach"
+    },
+    {
+      "name": "General-2",
+      "area": "General Workspace",
+      "zone": "018",
+      "location": "On ceiling above Cold Metals tables"
+    },
+    {
+      "name": "ColdMetals-1",
+      "area": "Cold Metals",
+      "zone": "019",
+      "location": "On wall by Cold Metals computer"
+    },
+    {
+      "name": "General-1",
+      "area": "General Workspace",
+      "zone": "020",
+      "location": "On wall next to door to kitchen"
+    },
+    {
+      "name": "SmallMetals-1",
+      "area": "Small Metals",
+      "zone": "021",
+      "location": "Mounted on corner by kiln pointing SW"
     }
 ]
