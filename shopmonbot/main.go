@@ -32,15 +32,21 @@ func trimSuffix(s, suffix string) string {
 	return s
 }
 
-func formatSeconds(duration time.Duration) string {
+// This function takes a time.Duration object and builds a string
+// that is nicely formatted for days, hours, minutes, and seconds.
+// We want to make it nice so we have extra logic to determine
+// singular vs plural for the words (e.g. minute/minutes)
+func formatTime(duration time.Duration) string {
 	timeLine := ""
 
+	// Yer standard calculations...
 	totalSeconds := int64(duration.Seconds())
 	seconds := (totalSeconds % 60)
 	minutes := (totalSeconds % 3600) / 60
 	hours := (totalSeconds % 86400) / 3600
 	days := (totalSeconds % (86400 * 30)) / 86400
 
+	// Days part
 	if days > 0 {
 		if days > 1 {
 			timeLine = fmt.Sprintf("%d days, ", days)
@@ -49,6 +55,7 @@ func formatSeconds(duration time.Duration) string {
 		}
 	}
 
+	// Hours part
 	if hours > 0 {
 		if hours > 1 {
 			timeLine += fmt.Sprintf("%d hours, ", hours)
@@ -57,6 +64,7 @@ func formatSeconds(duration time.Duration) string {
 		}
 	}
 
+	// Minutes part
 	if minutes > 0 {
 		if minutes > 1 {
 			timeLine += fmt.Sprintf("%d minutes, ", minutes)
@@ -65,6 +73,7 @@ func formatSeconds(duration time.Duration) string {
 		}
 	}
 
+	// Seconds part
 	if seconds > 0 {
 		if seconds > 1 {
 			timeLine += fmt.Sprintf("%d seconds, ", seconds)
@@ -91,6 +100,11 @@ func reportForArea(input string) string {
 		fmt.Println("The area we want is:", area)
 	}
 
+	getAllAreas := false
+	if strings.ToLower(area) == "all" {
+		getAllAreas = true
+	}
+
 	// These two strings are for building the help message in case
 	// we didn't get an area or an unknown area
 	helpMsg := "Hmm, you want to enter `!area <area>` (case insensitive).\n_I currently know of the following areas:_ "
@@ -101,16 +115,25 @@ func reportForArea(input string) string {
 
 	now := time.Now()
 
+	// Now we're going to go through the map of areas...
 	foundArea := false
 	mutex.Lock()
 	for k, v := range sensorMap {
-		if strings.ToLower(k) == strings.ToLower(area) {
+		// Does someone want all areas, or just a specific one?
+		if (getAllAreas == true) || (strings.ToLower(k) == strings.ToLower(area)) {
+			// Yes, so get the difference between the current time and whatever is
+			// stored in the map
 			diff := now.Sub(v)
-			timeInfo := formatSeconds(diff)
-			areaStatus = fmt.Sprintf("There was someone in `%s` *%s* ago", k, timeInfo)
+			// And format the time nicely
+			timeInfo := formatTime(diff)
+			// Build our response line with it, putting the time part in bold
+			areaStatus += fmt.Sprintf("There was someone in `%s` *%s* ago", k, timeInfo)
+			// If we're getting all areas, we're gonna make it one-line-per
+			if getAllAreas == true {
+				areaStatus += "\n"
+			}
 			foundArea = true
 		}
-
 		// And while we're here, let's build the help text
 		areaList += fmt.Sprintf("`%s`, ", k)
 	}
@@ -119,6 +142,7 @@ func reportForArea(input string) string {
 	// And spiffy up the help message a little...
 	areaList = trimSuffix(strings.TrimSpace(areaList), ",")
 	helpMsg += areaList
+	helpMsg += "\nYou can also type `!area all` to get everything"
 
 	// If we didn't find the area the user wanted, then show
 	// the help message
@@ -132,19 +156,32 @@ func reportForArea(input string) string {
 	return message
 }
 
+// This function is where we listen for specific commands. We are not
+// using the Slack "/" commands but rather a more old-school IRC method
+// of using the bang operator ("!") and in this case the trigger word
+// we want is "area"
 func checkForCommands(input string) (bool, string) {
 	response := ""
 	sendResponse := false
-	fmt.Println("Got this:", input)
+	// Did we find our command?
 	matched, _ := regexp.MatchString("!area", input)
 	if matched {
+		// Yes we did, so we're going to indicate that we have something
+		// to send back...
 		sendResponse = true
+		// ... and build the response we are going to send back
 		response = reportForArea(strings.TrimSpace(input))
 	}
 
 	return sendResponse, response
 }
 
+// This function, well, keeps track of the various areas insofar
+// as that when we get a message from MQTT, we're going to add it
+// to the map of area->last seen time and we keep updating the
+// map as updates (and new areas) come in. We never delete from the
+// map because we want to always know when was the last time someone
+// was in an area, even if it was days and days ago
 func keepTrackOfAreas() {
 	for {
 		// Get our message from the MQTT topic
@@ -166,6 +203,15 @@ func keepTrackOfAreas() {
 		area := strings.Split(lineParts[1], ":")[1]
 		if len(area) == 0 {
 			fmt.Println("No area for", lineParts[1])
+			continue
+		}
+
+		// Also, we have a failsafe "Unknown area" which covers the time between
+		// the sensor going live and it being added to the database (e.g. the json
+		// file in the sensors project). We don't want to include that in our
+		// list
+		if area == "Unknown area" {
+			fmt.Println("Not adding unknown area")
 			continue
 		}
 

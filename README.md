@@ -12,5 +12,8 @@ The code that reads the sensor data from the main panel and sends to an MQTT top
 ### SensorStatus
 This is an intermediary program to allow other components (e.g. the website) to have more fine-grained control over sensor activity. 
 
+### ShopMonBot
+A Slack-based bot that maintains a list of areas and the last time anyone was in them. In an homage to its IRC roots, invoke it using `!area`. 
+
 ### Website
 All the code for [the public website](https://shopmon.pumpingstationone.org).
