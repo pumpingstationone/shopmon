@@ -105,3 +105,38 @@
     top: 450px;
     left: 660px;           
 }
+
+/* On ceiling near the Tormach */
+#Tormach-1 {
+    position: absolute;
+    top: 290px;
+    left: 480px;           
+}
+
+/* On ceiling near the Small Metals */
+#General-2 {
+    position: absolute;
+    top: 190px;
+    left: 480px;           
+}
+
+/* On wall by Cold Metals computer */
+#ColdMetals-1 {
+    position: absolute;
+    top: 250px;
+    left: 290px;           
+}
+
+/* On wall next to door to kitchen */
+#General-1 {
+    position: absolute;
+    top: 168px;
+    left: 300px;           
+}
+
+/* Mounted on corner by kiln pointing SW */
+#SmallMetals-1 {
+    position: absolute;
+    top: 150px;
+    left: 600px;           
+}
