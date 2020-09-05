@@ -100,5 +100,11 @@
       "area": "Small Metals",
       "zone": "021",
       "location": "Mounted on corner by kiln pointing SW"
+    },
+    {
+      "name": "Dock-1",
+      "area": "Dock",
+      "zone": "022",
+      "location": "Mounted on wall above west fire door"
     }
 ]
