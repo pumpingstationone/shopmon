@@ -140,3 +140,10 @@
     top: 150px;
     left: 600px;           
 }
+
+/* Mounted on corner in the dock */
+#Dock-1 {
+    position: absolute;
+    top: 313px;
+    left: 610px;           
+}
