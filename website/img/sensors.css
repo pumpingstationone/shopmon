@@ -146,4 +146,25 @@
     position: absolute;
     top: 313px;
     left: 610px;           
-}
+} 
+
+/* Mounted on corner in the dock */
+#Woodshop-1 {
+    position: absolute;
+    top: 420px;
+    left: 350px;           
+} 
+
+/* Mounted in middle near worktables */
+#Woodshop-2 {
+    position: absolute;
+    top: 400px;
+    left: 500px;           
+} 
+
+/* Mounted in middle near worktables */
+#Woodshop-3 {
+    position: absolute;
+    top: 380px;
+    left: 580px;           
+} 
