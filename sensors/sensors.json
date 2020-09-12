@@ -106,5 +106,23 @@
       "area": "Dock",
       "zone": "022",
       "location": "Mounted on wall above west fire door"
+    },
+    {
+      "name": "Woodshop-1",
+      "area": "Woodshop",
+      "zone": "013",
+      "location": "Mounted above the table saw"
+    },
+    {
+      "name": "Woodshop-2",
+      "area": "Woodshop",
+      "zone": "014",
+      "location": "Mounted above work tables near mitre saw"
+    },
+    {
+      "name": "Woodshop-3",
+      "area": "Woodshop",
+      "zone": "016",
+      "location": "Near the dock doors"
     }
 ]
