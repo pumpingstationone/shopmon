@@ -66,7 +66,7 @@ def readQueue():
             if goodLine:
                 # Special situation: Zone 008 is "****DISARMED****  Ready to Arm  " which
                 # is not a sensor, so for right now we ignore this one
-                if parts[1] == "008":
+                if parts[1] == "008" and "DISARMED" in parts[3]:
                     continue
 
                 # Now let's find the sensor number in the
@@ -87,7 +87,7 @@ def readQueue():
 
                 # Set up our mqtt connection
                 client = mqtt.Client()
-                client.connect('glue', 1883, 60) 
+                client.connect('glue.pumpingstationone.org', 1883, 60) 
                 client.publish('shopmontopic', txline)
                 client.disconnect()
 

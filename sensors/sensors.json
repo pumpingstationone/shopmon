@@ -66,6 +66,12 @@
       "location": "Above forge"
     },
     {
+      "name": "HotMetals-5",
+      "area": "Hot Metals",
+      "zone": "008",
+      "location": "By CNC Plasma"
+    },
+    {
       "name": "ShopBot-1",
       "area": "ShopBot",
       "zone": "012",
