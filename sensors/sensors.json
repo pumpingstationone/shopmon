@@ -130,5 +130,11 @@
       "area": "Woodshop",
       "zone": "016",
       "location": "Near the dock doors"
+    },
+    {
+      "name": "ColdMetals-2",
+      "area": "Cold Metals",
+      "zone": "025",
+      "location": "Pointing at Bridgeport"
     }
 ]
