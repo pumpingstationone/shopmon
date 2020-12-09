@@ -136,5 +136,11 @@
       "area": "Cold Metals",
       "zone": "025",
       "location": "Pointing at Bridgeport"
+    },
+    {
+      "name": "DockDoor",
+      "area": "Doors",
+      "zone": "026",
+      "location": "Dock"
     }
 ]
