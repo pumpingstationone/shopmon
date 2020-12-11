@@ -126,8 +126,16 @@ func reportForArea(input string) string {
 			diff := now.Sub(v)
 			// And format the time nicely
 			timeInfo := formatTime(diff)
+
 			// Build our response line with it, putting the time part in bold
-			areaStatus += fmt.Sprintf("There was someone in `%s` *%s* ago", k, timeInfo)
+
+			// If this is a door, we should alter the text a little
+			if strings.Contains(k, "Door") {
+				areaStatus += fmt.Sprintf("The `%s` was last open *%s* ago", k, timeInfo)
+			} else {
+				areaStatus += fmt.Sprintf("There was someone in `%s` *%s* ago", k, timeInfo)
+			}
+
 			// If we're getting all areas, we're gonna make it one-line-per
 			if getAllAreas == true {
 				areaStatus += "\n"
