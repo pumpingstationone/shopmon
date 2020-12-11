@@ -86,10 +86,22 @@ func (c *Client) readPump() {
 		// Note that the CSS on the webpage sets up the size of the
 		// image via the "pulse" class, and it will use the topic
 		// name for matching against the css id.
+		//
+		// December 10, 2020; if statusPart[1] contains the phrase
+		// "door", then we use a different animated gif, as those
+		// are door sensors and we want to show a different image
+		// to indicate the door is open
 		statusParts := strings.Split(statusMsg.spaceStatus, ",")
 		statusHTML := "<p/>"
 		if statusParts[2] == "1" {
-			statusHTML = "<img class=\"pulse\" src=\"/img/activity.gif\"/>"
+			// Are we a door, or a PIR sensor?
+			if strings.Contains(statusParts[1], "Door") {
+				// Yes, this is a door
+				statusHTML = "<img class=\"pulse\" src=\"/img/dooropen.gif\"/>"
+			} else {
+				// Not a door, a regular area sensor
+				statusHTML = "<img class=\"pulse\" src=\"/img/activity.gif\"/>"
+			}
 		}
 
 		// And piece it all together

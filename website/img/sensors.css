@@ -175,3 +175,10 @@
     top: 280px;
     left: 240px;           
 } 
+
+/* The dock rollup door */
+#Dock-Door {
+    position: absolute;
+    top: 255px;
+    left: 656px;           
+} 
