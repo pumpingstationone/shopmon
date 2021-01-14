@@ -138,8 +138,8 @@
       "location": "Pointing at Bridgeport"
     },
     {
-      "name": "DockDoor",
-      "area": "Doors",
+      "name": "Dock-Door",
+      "area": "Dock Door",
       "zone": "026",
       "location": "Dock"
     }

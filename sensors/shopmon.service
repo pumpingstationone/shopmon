@@ -1,0 +1,17 @@
+[Unit]
+Description=Shopmon Service
+After=multi-user.target
+AssertPathExists=/home/pi/shopmon/sensors
+
+[Service]
+User=pi
+Group=pi
+WorkingDirectory=/home/pi/shopmon/sensors
+ExecStart=/home/pi/shopmon/sensors/sendevents.py
+ExecStop=
+Restart=always
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target

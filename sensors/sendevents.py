@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import paho.mqtt.client as mqtt
 import json
 import socket
@@ -6,6 +8,7 @@ import threading
 import time
 import collections 
 import random
+import sys
 from queue import Queue
 
 # Our work queue
@@ -28,21 +31,25 @@ def readData():
     s.connect((socket.gethostname(), 10000))
     
     while True:
-        full_msg = ''
+        try:
+            full_msg = ''
+    
+            while True:
+                msg = s.recv(1)
+                if len(msg) <= 0:
+                    break
 
-        while True:
-            msg = s.recv(1)
-            if len(msg) <= 0:
-                break
+                full_msg += msg.decode("ascii")
+                if not full_msg.endswith("\r"):
+                    continue
+                else:
+                    break
 
-            full_msg += msg.decode("ascii")
-            if not full_msg.endswith("\r"):
-                continue
-            else:
-                break
-
-        if len(full_msg) > 0:
-            workQueue.put(full_msg.strip())
+            if len(full_msg) > 0:
+                workQueue.put(full_msg.strip())
+        except:
+            e = sys.exc_info()[0]
+            logging.info("!!! EXCEPTION !!!", e) 
 
 # This thread reads the messages that readData() above put
 # on the queue and sends them to the MQTT server.
