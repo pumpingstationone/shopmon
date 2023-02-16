@@ -7,8 +7,8 @@ import (
 	"strings"
 	"sync"
 	"time"
-
-	"github.com/nlopes/slack"
+	"gopkg.in/ini.v1"
+	"github.com/slack-go/slack"
 )
 
 // StatusMessage is a struct that is passed from the
@@ -171,6 +171,7 @@ func reportForArea(input string) string {
 func checkForCommands(input string) (bool, string) {
 	response := ""
 	sendResponse := false
+	
 	// Did we find our command?
 	matched, _ := regexp.MatchString("!area", input)
 	if matched {
@@ -244,6 +245,16 @@ func keepTrackOfAreas() {
 
 func main() {
 	fmt.Println("Okay, here we go...")
+	
+	// Now get the slack token from the ini file
+	cfg, err := ini.Load("config.ini")
+    	if err != nil {
+        	fmt.Printf("Failed to read config file: %v\n", err)
+        	return
+    	}
+
+    	botToken := cfg.Section("Slack").Key("Token").String()
+	ignoreUser := cfg.Section("Slack").Key("IgnoreUser").String()
 
 	// The channel we're going to receive messages on
 	statusChannel = make(chan StatusMessage)
@@ -261,8 +272,8 @@ func main() {
 	//
 	// Now begins the Slack stuff
 	//
-	token := "" // ToDo: Need the appropriate API token from Slack
-	api := slack.New(token)
+	// For debugging, use the one with the Debug option
+	api := slack.New(botToken, slack.OptionDebug(true))
 	rtm := api.NewRTM()
 	go rtm.ManageConnection()
 
@@ -276,6 +287,12 @@ Loop:
 				text = strings.TrimSpace(text)
 				text = strings.ToLower(text)
 
+				user := ev.User
+				//fmt.Println("The user is", user, "the text is", text)
+				if user == ignoreUser {
+					continue
+				}	
+					
 				// Let's see if someone asked us for something...
 				sendResponse, response := checkForCommands(text)
 
@@ -283,7 +300,7 @@ Loop:
 					// ...yep, we sent something back, so let's send it to the channel
 					rtm.SendMessage(rtm.NewOutgoingMessage(response, ev.Channel))
 				}
-
+				
 			case *slack.RTMError:
 				fmt.Printf("Error: %s\n", ev.Error())
 
@@ -293,6 +310,7 @@ Loop:
 
 			default:
 				// Nothin' to do
+				//fmt.Printf(".")
 			}
 		}
 	}
