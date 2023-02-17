@@ -1,4 +1,4 @@
-#ShopMonBot
+# ShopMonBot
 ## Purpose
 `ShopMonBot` is a Slack-based bot that will tell you when someone was last in an area. It can be a specific area (e.g. `!area woodshop`) or a report on all the currently known areas (`!area all`).
 
